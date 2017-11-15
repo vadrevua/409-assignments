@@ -79,6 +79,7 @@ public class ActivationFunctions {
     }
     
     System.out.println("Weights: " + weights[0] + " " + weights[1] + " " + weights[2]);
+    System.out.println("y = " + (weights[0] / (-1 * weights[1])) + "x + " + (weights[2] / (-1 * weights[1])));
     
     double tp = 0;
     double tn = 0;
@@ -130,6 +131,7 @@ public class ActivationFunctions {
     }
     
     System.out.println("Weights: " + weights[0] + " " + weights[1] + " " + weights[2]);
+    System.out.println("y = " + (weights[0] / (-1 * weights[1])) + "x + " + (weights[2] / (-1 * weights[1])));
     
     double tp = 0;
     double tn = 0;

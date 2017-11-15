@@ -13,12 +13,12 @@ public class ActivationFunctions {
     
     ActivationFunctions af = new ActivationFunctions();
     af.importData();
-    af.hardActivationFunction(0.75, 0.2);
-    af.softActivationFunction(0.75, 0.2);
-    af.hardActivationFunction(0.5, 0.2);
-    af.softActivationFunction(0.5, 0.2);
-    af.hardActivationFunction(0.25, 0.2);
-    af.softActivationFunction(0.25, 0.2);
+    af.hardActivationFunction(0.75, 0.2); //2.011x + 2.002
+    af.softActivationFunction(0.75, 0.2); //2.01x + 2.07
+    af.hardActivationFunction(0.5, 0.2); //2.081x + 1.674
+    af.softActivationFunction(0.5, 0.2); //2.08x + 1.709
+    af.hardActivationFunction(0.25, 0.2); //1.979x + 0.834
+    af.softActivationFunction(0.25, 0.2); //2.086x + 0.894
     
   }
   
