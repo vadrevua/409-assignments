@@ -1,5 +1,5 @@
 /*
- * Program that trains and test two types of activation functions on a dataset
+ * Program that trains and tests a function to predict temperature given time of day as input
  */
 
 import java.io.*;
@@ -7,20 +7,15 @@ import java.util.*;
 
 public class Project3 {
   
-  private double[][] dataArr = new double[9][5];
+  private double[][] dataArr = new double[36][2];
   private ArrayList<Double[]> neurons;
   
   public static void main(String[] args) {
     
     Project3 p = new Project3();
     p.importData();
-    p.normalizeData();
-    p.activationFunction(1.0);
-    
-    // For checking weight values
-    for(int i = 0; i < p.neurons.size(); i++) {
-      System.out.println(p.neurons.get(i)[0] + " " + p.neurons.get(i)[1] + " " + p.neurons.get(i)[2]);
-    }
+    //p.normalizeData();
+    p.activationFunction(0.00062);
     
   }
   
@@ -46,15 +41,27 @@ public class Project3 {
       scan4.useDelimiter(",|\n");   
       
       int i = 0;
-      while(scan1.hasNextLine() && scan2.hasNextLine() && scan3.hasNextLine() && scan4.hasNextLine()) {
+      while(scan1.hasNextLine()) {
         dataArr[i][0] = scan1.nextDouble();
         dataArr[i][1] = Double.parseDouble(scan1.next());
-        scan2.nextDouble();
-        dataArr[i][2] = Double.parseDouble(scan2.next());
-        scan3.nextDouble();
-        dataArr[i][3] = Double.parseDouble(scan3.next());
-        scan4.nextDouble();
-        dataArr[i][4] = Double.parseDouble(scan4.next());
+        i++;
+      }
+      
+      while(scan2.hasNextLine()) {
+        dataArr[i][0] = scan2.nextDouble();
+        dataArr[i][1] = Double.parseDouble(scan2.next());
+        i++;
+      }
+      
+      while(scan3.hasNextLine()) {
+        dataArr[i][0] = scan3.nextDouble();
+        dataArr[i][1] = Double.parseDouble(scan3.next());
+        i++;
+      }
+      
+      while(scan4.hasNextLine()) {
+        dataArr[i][0] = scan4.nextDouble();
+        dataArr[i][1] = Double.parseDouble(scan4.next());
         i++;
       }
       
@@ -96,34 +103,52 @@ public class Project3 {
   
   public void activationFunction(double alpha) {
     
-    neurons = new ArrayList<Double[]>();
-    neurons.add(new Double[]{ Math.random(), Math.random(), 0.0 });
-    neurons.add(new Double[]{ Math.random(), Math.random(), 0.0 });
-    neurons.add(new Double[]{ Math.random(), Math.random(), 0.0 });
-    neurons.add(new Double[]{ Math.random(), Math.random(), 0.0 });
-    neurons.add(new Double[]{ Math.random(), Math.random(), 0.0 });
-    neurons.add(new Double[]{ Math.random(), Math.random(), 0.0 });
-    neurons.add(new Double[]{ Math.random(), Math.random(), 0.0 });
-    neurons.add(new Double[]{ Math.random(), Math.random(), 0.0 });
-    neurons.add(new Double[]{ Math.random(), Math.random(), 0.0 });
+    double[] weights = new double[]{ Math.random() * 20, Math.random() * 20 };
     
-    for(int i = 1; i < 4; i++) {
-      for(int j = 0; j < 9; j++) {
-        double net = Double.MIN_VALUE;
-        int winner = 0;
-        for(int k = 0; k < neurons.size(); k++) {
-          double out = (neurons.get(k)[0] * dataArr[j][0]) + (neurons.get(k)[1] * dataArr[j][i]);
-          if(out > net) {
-            net = out;
-            winner = k;
-          }
-        }
-        double a = neurons.get(winner)[0];
-        double b = neurons.get(winner)[1];
-        double normalizedA = (alpha * dataArr[j][0] + a) / Math.sqrt(Math.pow(alpha * dataArr[j][0] + a, 2) + Math.pow(alpha * dataArr[j][i] + b, 2));
-        double normalizedB = (alpha * dataArr[j][i] + b) / Math.sqrt(Math.pow(alpha * dataArr[j][i] + b, 2) + Math.pow(alpha * dataArr[j][0] + a, 2));
-        neurons.set(winner, new Double[]{ normalizedA, normalizedB, 1.0 });
+    for(int i = 0; i < 200; i++) {
+      
+      double te_a = 0.0;
+      double te_b = 0.0;
+      
+      for(int j = 0; j < 27; j++) {
+        
+        double out = weights[0] * dataArr[j][0] + weights[1];
+        double dout = dataArr[j][1];
+        te_a += ((dout - out) * dataArr[j][0]);
+        te_b += (dout - out);
+        
       }
+      
+      weights[0] += alpha * te_a;
+      weights[1] += alpha * te_b;
+      
+    }
+    
+    System.out.println("Weights: x1 = " + weights[0] + ", x0 = " + weights[1] + "\n");
+    System.out.println("TRAINING ERRORS");
+    
+    for(int i = 0; i < 27; i++) {
+      
+      double out = weights[0] * dataArr[i][0] + weights[1];
+      double dout = dataArr[i][1];
+      double err = Math.abs(out - dout);
+      System.out.println("Output (desired): " + dout);
+      System.out.println("Output (actual): " + out);
+      System.out.println("Absolute Error: " + err);
+      
+    }
+    
+    System.out.println("\nTESTING ERRORS");
+    
+    for(int i = 27; i < 36; i++) {
+      
+      double out = weights[0] * dataArr[i][0] + weights[1];
+      double dout = dataArr[i][1];
+      double err = Math.abs(out - dout);
+      System.out.println("Output (desired): " + dout);
+      System.out.println("Output (actual): " + out);
+      System.out.println("Absolute Error: " + err);
+      
     }
     
   }
