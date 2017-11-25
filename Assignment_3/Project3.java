@@ -105,7 +105,7 @@ public class Project3 {
     
     double[] weights = new double[]{ Math.random() * 20, Math.random() * 20 };
     
-    for(int i = 0; i < 200; i++) {
+    for(int i = 0; i < 1000; i++) {
       
       double te_a = 0.0;
       double te_b = 0.0;
@@ -126,28 +126,26 @@ public class Project3 {
     
     System.out.println("Weights: x1 = " + weights[0] + ", x0 = " + weights[1] + "\n");
     System.out.println("TRAINING ERRORS");
+    System.out.println("Output (desired)\tOutput (actual)\tAbsolute Error");
     
     for(int i = 0; i < 27; i++) {
       
       double out = weights[0] * dataArr[i][0] + weights[1];
       double dout = dataArr[i][1];
       double err = Math.abs(out - dout);
-      System.out.println("Output (desired): " + dout);
-      System.out.println("Output (actual): " + out);
-      System.out.println("Absolute Error: " + err);
+      System.out.println(dout + "\t" + out + "\t" + err);
       
     }
     
     System.out.println("\nTESTING ERRORS");
+    System.out.println("Output (desired)\tOutput (actual)\tAbsolute Error");
     
     for(int i = 27; i < 36; i++) {
       
       double out = weights[0] * dataArr[i][0] + weights[1];
       double dout = dataArr[i][1];
       double err = Math.abs(out - dout);
-      System.out.println("Output (desired): " + dout);
-      System.out.println("Output (actual): " + out);
-      System.out.println("Absolute Error: " + err);
+      System.out.println(dout + "\t" + out + "\t" + err);
       
     }
     
