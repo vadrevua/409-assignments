@@ -7,13 +7,13 @@ public class Project4Revised {
     
     try{
       
-      Scanner stoppies = new Scanner(new File("C:/Users/Barack/Documents/GitHub/409Assignment1/Assignment_4/Project4_sentences/stop_words.txt"));
+      Scanner stoppies = new Scanner(new File("stop_words.txt"));
       while(stoppies.hasNext()) {
         stopString = stopString + stoppies.next() + " ";
       }
       ArrayList<String> stopList = new ArrayList<String>(Arrays.asList(stopString.toLowerCase().split("\\s+")));
       
-      Scanner senFile = new Scanner(new File("C:/Users/Barack/Documents/GitHub/409Assignment1/Assignment_4/Project4_sentences/sentences.txt"));
+      Scanner senFile = new Scanner(new File("sentences.txt"));
       while(senFile.hasNextLine()) {
         String sentence = senFile.nextLine();
         sentence = sentence.replaceAll("[^a-zA-Z ]", " ").toLowerCase().trim();
