@@ -10,7 +10,7 @@ public class Clustering {
     
     Clustering c = new Clustering();
     c.importData();
-    c.cluster(1.0);
+    c.cluster(1.5);
     
   }
   
@@ -59,11 +59,12 @@ public class Clustering {
       if(clusterIndex == -1) {
         clusters.add(v);
         clusters.get(clusters.size() - 1).add(1.0);
+        System.out.println(clusters.size() + ": 1.0");
       }
       else {
         ArrayList<Double> cluster = clusters.get(clusterIndex);
         double m = cluster.get(cluster.size() - 1);
-        System.out.println(clusterIndex + ": " + (m+1));
+        System.out.println((clusterIndex+1) + ": " + (m+1));
         for(int i = 0; i < cluster.size() - 1; i++) {
           double newVal = (m * cluster.get(i) + alpha * v.get(i)) / (m + 1.0);
           cluster.set(i, newVal);
